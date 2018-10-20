@@ -10,7 +10,7 @@ export default class Previewer extends React.Component {
                     <img className = 'header-icon' src="fire.svg"/>  Previewer
                 </span>
                 <span>
-                    <img className = "header-icon" src="expand-square.svg" />
+                    <img className = "header-icon" src="expand-square.svg" onClick = {this.props.expandViewer}/>
                     <img className = "header-icon" src="compress.svg" />
                 </span>
             </div>

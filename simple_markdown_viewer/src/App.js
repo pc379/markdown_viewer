@@ -6,10 +6,12 @@ import Previewer from './components/previewer';
 import marked from 'marked';
 import initialText from './initialText';
 
+import {connect} from 'react-redux';
+
+import expandViewer from './actions/expandViewer';
+import contractViewer from './actions/contractViewer';
+
 const regex = /\\r/g;
-// marked.setOptions({
-//   gfm:true
-// })
 const myRenderer = new marked.Renderer();
 
 myRenderer.text = function(text, level){
@@ -26,6 +28,7 @@ class App extends Component {
       previewerNode: null
     };
     this.updateText = this.updateText.bind(this);
+    this.expandViewer = this.expandViewer.bind(this);
   }
 
   componentDidMount(){
@@ -40,24 +43,41 @@ class App extends Component {
   }
   updateText(e){
     let text = e.target.value;
-    // console.log(text.replace(regex, '$@$#nsbp'));
     this.setState({text: text});
     document.getElementById('preview').innerHTML = marked(text, {renderer: myRenderer});
-      // ).replace(regex, '<br>');
     let links = document.getElementsByTagName('a');
     for (let i = 0; i<links.length; i++){
       links[i].setAttribute('target', '_blank');
     }
   }
 
+  expandViewer(e){
+    if(e.target.parentNode.parentNode.parentNode.nextSibling){
+      e.target.parentNode.parentNode.parentNode.nextSibling.style.display = 'none';
+      
+    }    
+    if(e.target.parentNode.parentNode.parentNode.previousSibling){
+      e.target.parentNode.parentNode.parentNode.previousSibling.style.display = 'none';
+      
+    }
+    e.target.parentNode.parentNode.parentNode.style.width='100%';
+    console.log(e.target.parentNode.parentNode.parentNode.scrollHeight);
+    e.target.parentNode.parentNode.parentNode.height=e.target.parentNode.parentNode.parentNode.scrollHeight;
+    
+
+  }
+  
+
   render() {
     return (
       <div className="App">
-       <Editor text = {this.state.text} updateText = {this.updateText}/>
-       <Previewer text = {this.state.text}/>
+       <Editor text = {this.state.text} updateText = {this.updateText} expandViewer = {this.expandViewer}/>
+       <Previewer text = {this.state.text} expandViewer = {this.expandViewer}/>
       </div>
     );
   }
 }
+
+
 
 export default App;

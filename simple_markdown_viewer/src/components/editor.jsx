@@ -10,7 +10,7 @@ export default class Editor extends React.Component {
                     <img className = 'header-icon' src="fire.svg"/>  Editor
                 </span>
                 <span>
-                    <img className = "header-icon" src="expand-square.svg" />
+                    <img className = "header-icon" src="expand-square.svg" onClick={this.props.expandViewer}/>
                     <img className = "header-icon" src="compress.svg" />
                 </span>
             </div>
